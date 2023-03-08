@@ -158,3 +158,62 @@ function addRole() {
     })
 }
 
+function addDepartment() {
+    inquirer
+    .prompt([
+        {
+            name: "departmentName",
+            type: "input",
+            message: "What is the name of the department you would wish to add?",
+        },
+    ])
+    .then(function (answer) {
+        var query = "INSERT INTO department (name) VALUE (?)";
+        connection.query(query, answer.departmentName, function (err, res) {
+            if (err) throw err;
+            console.log(`Successfully added the department!`);
+            runSearch();
+        });
+    });
+}
+
+function updataeEmployeeRole(){
+    inquirer
+    .prompt([
+      {
+        name: "currentEmployeeID",
+        type: "input",
+        message: "What is the ID of the employee you would like update?",
+      },
+      {
+        name: "newRoleTitle",
+        type: "input",
+        message: "What is the title of their new role?",
+      },
+      {
+        name: "newRoleSalary",
+        type: "input",
+        message: "What is their new salary?",
+      },
+      {
+        name: "newRoleDeptID",
+        type: "list",
+        message: "What department will they belong to? Select 1 for Sales, 2 for Engineering, 3 for Finance, 4 for Legal.",
+        choices: [1, 2, 3, 4]
+      },
+    ])
+    .then(function(answer) {
+      var query = "UPDATE role SET title = ?, salary = ?, department_id = ? WHERE id = ?";
+          connection.query(query, [answer.newRoleTitle, answer.newRoleSalary, answer.newRoleDeptID, parseInt(answer.currentEmployeeID)], function(err, res) {
+            if (err) throw (err);
+            console.log("Successful Update!");
+            runSearch();
+            })
+        }
+)}
+
+function exit() {
+    process.exit();
+}
+
+module.exports = runSearch;
