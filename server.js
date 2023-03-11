@@ -1,6 +1,6 @@
 const fs = require('fs');
 const mysql = require('mysql');
-const inquirer = require('inquirer');
+var inquirer = require('inquirer');
 const ctable = require('console.table');
 
 const connection = mysql.createConnection({
@@ -11,10 +11,10 @@ const connection = mysql.createConnection({
     database: "employees"
 });
 
-connection.connect(function (err) {
-    if (err) throw err;
-    empTrack();
-});
+//connection.connect(function (err) {
+ //   if (err) throw err;
+  //  empTrack();
+//});
 
 function empTrack() {
     inquirer
